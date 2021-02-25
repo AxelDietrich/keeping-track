@@ -1,5 +1,6 @@
 package com.keepingtrack.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,10 +10,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "subcategories")
+@JsonIgnoreProperties({"hiberanteLazyInitializer", "handler", "category"})
 public class Subcategory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -25,11 +27,11 @@ public class Subcategory {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name= "updated_at", nullable = false)
+    @Column(name= "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
@@ -37,9 +39,10 @@ public class Subcategory {
     private List<Record> records;
 
 
-    public Subcategory(Long id, String name, Category category, List<Record> records, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Subcategory(Long id, String name, double amount, Category category, List<Record> records, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
+        this.amount = amount;
         this.category = category;
         this.records = records;
         this.createdAt = createdAt;
@@ -63,6 +66,14 @@ public class Subcategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public Category getCategory() {

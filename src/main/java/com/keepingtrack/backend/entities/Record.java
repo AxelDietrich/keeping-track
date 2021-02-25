@@ -1,5 +1,6 @@
 package com.keepingtrack.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -8,10 +9,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "records")
+@JsonIgnoreProperties({"hiberanteLazyInitializer", "handler", "subcategory"})
 public class Record {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -20,11 +22,11 @@ public class Record {
     @Column(nullable = false)
     private double amount;
 
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(name= "updated_at", nullable = false)
+    @Column(name= "updated_at")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 

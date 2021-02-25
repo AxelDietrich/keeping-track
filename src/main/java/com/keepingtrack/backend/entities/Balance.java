@@ -1,13 +1,16 @@
 package com.keepingtrack.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "balances")
+@JsonIgnoreProperties({"hiberanteLazyInitializer", "handler", "account"})
 public class Balance {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "available_amount", nullable = false)

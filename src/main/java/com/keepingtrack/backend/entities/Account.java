@@ -12,7 +12,7 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)
@@ -24,7 +24,7 @@ public class Account {
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
     private Balance balance;
 
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
