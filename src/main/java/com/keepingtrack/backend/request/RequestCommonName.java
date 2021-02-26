@@ -2,15 +2,15 @@ package com.keepingtrack.backend.request;
 
 import java.io.Serializable;
 
-public class RequestAddSubcategory implements Serializable {
+public class RequestCommonName implements Serializable {
 
     private String name;
 
-    public RequestAddSubcategory(String name) {
+    public RequestCommonName(String name) {
         this.name = name;
     }
 
-    public RequestAddSubcategory() {
+    public RequestCommonName() {
     }
 
     public String getName() {

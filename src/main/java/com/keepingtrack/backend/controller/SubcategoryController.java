@@ -4,7 +4,7 @@ import com.keepingtrack.backend.entities.Record;
 import com.keepingtrack.backend.entities.Subcategory;
 import com.keepingtrack.backend.exception.AlreadyExistsException;
 import com.keepingtrack.backend.exception.RecordNotFoundException;
-import com.keepingtrack.backend.request.RequestAddSubcategory;
+import com.keepingtrack.backend.request.RequestCommonName;
 import com.keepingtrack.backend.service.CategoryService;
 import com.keepingtrack.backend.service.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SubcategoryController {
     CategoryService categoryService;
 
     @PostMapping("/{categoryId}/subcategory")
-    public ResponseEntity addSubcategory(@PathVariable Long categoryId, @RequestBody RequestAddSubcategory request) throws AlreadyExistsException, RecordNotFoundException {
+    public ResponseEntity addSubcategory(@PathVariable Long categoryId, @RequestBody RequestCommonName request) throws AlreadyExistsException, RecordNotFoundException {
         Subcategory subcategory = new Subcategory();
         subcategory.setName(request.getName());
         subcategory.setCategory(categoryService.getById(categoryId));
