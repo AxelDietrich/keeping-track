@@ -43,7 +43,15 @@ public class SubcategoryService {
             balance.setAvailableAmount(currentAmount + amount);
         } else {
             if (currentAmount - amount >= 0 ) {
-                balance.setAvailableAmount(currentAmount - amount);
+                if (currentAmount == 0 && amount < 0){
+                    double debt = balance.getDebt();
+                    if (debt + amount < 0) {
+                        balance.setDebt(0);
+                        balance.setAvailableAmount((debt + amount) * -1);
+                    }
+                } else {
+                    balance.setAvailableAmount(currentAmount - amount);
+                }
             } else {
                 balance.setAvailableAmount(0);
                 balance.setDebt(balance.getDebt() + (amount - currentAmount));

@@ -1,8 +1,10 @@
 package com.keepingtrack.backend.service;
 
 import com.keepingtrack.backend.entities.Record;
+import com.keepingtrack.backend.exception.DatabaseException;
 import com.keepingtrack.backend.exception.RecordNotFoundException;
 import com.keepingtrack.backend.repository.RecordRepository;
+import org.hibernate.dialect.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,6 +78,21 @@ public class RecordService {
             return editRecord;
         } else {
             throw new RecordNotFoundException("No record found for given id " + recordParam.getId());
+        }
+    }
+
+    public boolean deteleRecord(Long id) {
+        try {
+            Optional<Record> record = recordRepository.findById(id);
+            if (record.isPresent()) {
+                recordRepository.deleteById(id);
+                subcategoryService.updateSubcategoryAmount(record.get().getSubcategory().getId(), record.get().getAmount() * -1);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            throw new DatabaseException("Database exception");
         }
     }
 }

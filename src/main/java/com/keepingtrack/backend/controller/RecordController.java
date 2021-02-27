@@ -45,4 +45,14 @@ public class RecordController {
 
         return ResponseEntity.ok("Record successfully updated");
     }
+
+    @DeleteMapping("/records/{recordId}")
+    public ResponseEntity deleteRecord(@PathVariable Long recordId) {
+        boolean response = recordService.deteleRecord(recordId);
+        if (response) {
+            return ResponseEntity.ok("Record successfully deleted");
+        } else {
+            return ResponseEntity.ok("No record found for given id " + recordId);
+        }
+    }
 }
