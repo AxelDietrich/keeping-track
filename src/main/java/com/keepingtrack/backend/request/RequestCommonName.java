@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class RequestCommonName implements Serializable {
 
+    private static final long serialVersionUID = 5544022451468668893L;
     private String name;
 
     public RequestCommonName(String name) {

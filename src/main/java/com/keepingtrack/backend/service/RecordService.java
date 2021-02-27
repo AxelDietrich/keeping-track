@@ -48,4 +48,34 @@ public class RecordService {
             return recordParam;
         }
     }
+
+    public Record updateRecord(Record recordParam) throws RecordNotFoundException {
+
+        Optional<Record> record = recordRepository.findById(recordParam.getId());
+
+        if (record.isPresent()) {
+            Record editRecord = record.get();
+            double oldAmount = editRecord.getAmount();
+            double newAmount = 0;
+            if (recordParam.getAmount() != null) {
+                editRecord.setAmount(recordParam.getAmount());
+                newAmount = recordParam.getAmount();
+                newAmount = newAmount - oldAmount;
+            }
+            if (recordParam.getName() != null) {
+                editRecord.setName(recordParam.getName());
+            }
+            editRecord = recordRepository.save(editRecord);
+            if (recordParam.getAmount() != null) {
+                try {
+                    subcategoryService.updateSubcategoryAmount(editRecord.getSubcategory().getId(), newAmount);
+                } catch (RecordNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+            return editRecord;
+        } else {
+            throw new RecordNotFoundException("No record found for given id " + recordParam.getId());
+        }
+    }
 }

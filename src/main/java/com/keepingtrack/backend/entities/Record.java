@@ -20,7 +20,7 @@ public class Record {
     private String name;
 
     @Column(nullable = false)
-    private double amount;
+    private Double amount;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
@@ -34,7 +34,7 @@ public class Record {
     @JoinColumn(name = "subcategory_id", nullable = false)
     private Subcategory subcategory;
 
-    public Record(Long id, String name, double amount, Subcategory subcategory, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Record(Long id, String name, Double amount, Subcategory subcategory, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.amount = amount;
@@ -62,11 +62,11 @@ public class Record {
         this.name = name;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
