@@ -34,4 +34,10 @@ public class SubcategoryController {
 
         return ResponseEntity.ok("Subcategory created succesfully");
     }
+
+    @PutMapping("/subcategory/{subcategoryId}")
+    public ResponseEntity updateSubcategoryName(@PathVariable Long subcategoryId, @RequestParam String name) throws RecordNotFoundException {
+        Subcategory sub = subcategoryService.updateSubcategoryName(subcategoryId, name);
+        return ResponseEntity.ok("Subcategory name successfully updated.");
+    }
 }
