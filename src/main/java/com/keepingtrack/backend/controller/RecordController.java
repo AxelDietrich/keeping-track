@@ -56,8 +56,4 @@ public class RecordController {
         }
     }
 
-    @GetMapping("/hola-verna")
-    public ResponseEntity index() {
-        return ResponseEntity.ok("Verna puta                             ");
-    }
 }

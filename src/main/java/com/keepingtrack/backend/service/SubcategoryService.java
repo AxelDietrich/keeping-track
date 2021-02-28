@@ -57,6 +57,7 @@ public class SubcategoryService {
                 balance.setDebt(balance.getDebt() + (amount - currentAmount));
             }
         }
+        //TODO test data integrity on exception event
         balanceService.updateBalance(balance);
         return subcategory;
     }
@@ -81,5 +82,16 @@ public class SubcategoryService {
         }
 
         return subcategoryParam;
+    }
+
+    public boolean deleteSubcategory(Long id) {
+
+        Optional<Subcategory> sub = subcategoryRepository.findById(id);
+        if (sub.isPresent()) {
+            subcategoryRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

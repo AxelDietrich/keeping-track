@@ -40,4 +40,14 @@ public class SubcategoryController {
         Subcategory sub = subcategoryService.updateSubcategoryName(subcategoryId, name);
         return ResponseEntity.ok("Subcategory name successfully updated.");
     }
+
+    @DeleteMapping("/subcategory/{subcategoryId}")
+    public ResponseEntity deleteSubcategory(@PathVariable Long subcategoryId) {
+        boolean deleted = subcategoryService.deleteSubcategory(subcategoryId);
+        if (deleted) {
+            return ResponseEntity.ok("Subcategory successfully deleted.");
+        } else {
+            return ResponseEntity.ok("No subcategory found for given id " + subcategoryId);
+        }
+    }
 }
