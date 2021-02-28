@@ -28,7 +28,7 @@ public class RecordController {
         record.setName(request.getName());
         record.setAmount(request.getAmount());
         record.setSubcategory(subcategory);
-        Record recordResponse = recordService.createOrUpdateRecord(record);
+        Record recordResponse = recordService.createRecord(record);
 
         return ResponseEntity.ok(recordResponse);
     }
@@ -54,5 +54,10 @@ public class RecordController {
         } else {
             return ResponseEntity.ok("No record found for given id " + recordId);
         }
+    }
+
+    @GetMapping("/hola-verna")
+    public ResponseEntity index() {
+        return ResponseEntity.ok("Verna puta                             ");
     }
 }

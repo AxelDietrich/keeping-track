@@ -4,7 +4,6 @@ import com.keepingtrack.backend.entities.Record;
 import com.keepingtrack.backend.exception.DatabaseException;
 import com.keepingtrack.backend.exception.RecordNotFoundException;
 import com.keepingtrack.backend.repository.RecordRepository;
-import org.hibernate.dialect.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,36 +18,16 @@ public class RecordService {
     @Autowired
     SubcategoryService subcategoryService;
 
-    public Record createOrUpdateRecord(Record recordParam) {
+    public Record createRecord(Record recordParam) {
 
-        if (recordParam.getId() != null) {
-            Optional<Record> record = recordRepository.findById(recordParam.getId());
-
-            if (record.isPresent()) {
-                Record editRecord = record.get();
-                editRecord.setAmount(recordParam.getAmount());
-                editRecord.setName(recordParam.getName());
-
-                editRecord = recordRepository.save(editRecord);
-                return editRecord;
-            } else {
-                recordParam = recordRepository.save(recordParam);
-                try {
-                    subcategoryService.updateSubcategoryAmount(recordParam.getSubcategory().getId(), recordParam.getAmount());
-                } catch (RecordNotFoundException e) {
-                    e.printStackTrace();
-                }
-                return recordParam;
-            }
-        } else {
-            recordParam = recordRepository.save(recordParam);
-            try {
-                subcategoryService.updateSubcategoryAmount(recordParam.getSubcategory().getId(), recordParam.getAmount());
-            } catch (RecordNotFoundException e) {
-                e.printStackTrace();
-            }
-            return recordParam;
+        recordParam = recordRepository.save(recordParam);
+        try {
+            subcategoryService.updateSubcategoryAmount(recordParam.getSubcategory().getId(), recordParam.getAmount());
+        } catch (RecordNotFoundException e) {
+            e.printStackTrace();
         }
+        return recordParam;
+
     }
 
     public Record updateRecord(Record recordParam) throws RecordNotFoundException {
