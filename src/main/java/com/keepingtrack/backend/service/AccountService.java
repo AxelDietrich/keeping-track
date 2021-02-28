@@ -3,17 +3,20 @@ package com.keepingtrack.backend.service;
 import com.keepingtrack.backend.entities.Account;
 import com.keepingtrack.backend.entities.Balance;
 import com.keepingtrack.backend.entities.Category;
+import com.keepingtrack.backend.entities.Subcategory;
 import com.keepingtrack.backend.exception.AlreadyExistsException;
 import com.keepingtrack.backend.exception.RecordNotFoundException;
 import com.keepingtrack.backend.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class AccountService {
 
     @Autowired
@@ -93,6 +96,10 @@ public class AccountService {
             categoryDebt.setName("Deudas");
             categoryDebt.setIncome(false);
             categoryDebt.setAccount(account);
+            Subcategory auto = new Subcategory();
+            auto.setName("Auto-generados");
+            auto.setCategory(categoryDebt);
+            auto.setAmount(0);
             Category categorySavings = new Category();
             categorySavings.setName("Ahorro");
             categorySavings.setIncome(true);
