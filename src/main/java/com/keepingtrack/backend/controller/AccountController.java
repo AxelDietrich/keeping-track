@@ -24,7 +24,6 @@ public class AccountController {
 
         List<Account> accounts = accountService.getAllAccounts();
         return ResponseEntity.ok(accounts);
-//        return new Response<List<Account>>(accounts, new HttpHeaders(), HttpStatus.OK);
     }
 
     @PostMapping("/account")

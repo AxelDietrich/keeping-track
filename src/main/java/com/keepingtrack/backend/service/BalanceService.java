@@ -57,10 +57,23 @@ public class BalanceService {
         double availableMoney = balance.getAvailableAmount();
         if (availableMoney - amount > 0) {
             balance.setAvailableAmount(availableMoney - amount);
-            balance.setSavingsAmount(amount);
+            balance.setSavingsAmount(balance.getSavingsAmount() + amount);
             return balanceRepository.save(balance);
         } else {
             throw new Exception("There's no enough available money to move the requested amount to savings");
+        }
+    }
+
+    public Balance moveSavingsToAvailable(Long id, Double amount) throws Exception {
+
+        Balance balance = this.getBalanceById(id);
+        double savingsAmount = balance.getSavingsAmount();
+        if (savingsAmount - amount > 0) {
+            balance.setAvailableAmount(balance.getAvailableAmount() + amount);
+            balance.setSavingsAmount(balance.getSavingsAmount() - amount);
+            return balanceRepository.save(balance);
+        } else {
+            throw new Exception("There's no enough savings funds to move the requested amount to available money");
         }
     }
 }
